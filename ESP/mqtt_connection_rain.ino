@@ -12,7 +12,7 @@
 const int       LED_PIN        = 0;     // The pin connecting the LED (D3)
 const int       INTERRUPT_PIN  = 14;    // The pin connect the test button (D5)
 const int       RAIN_PIN  = 5;        // The pin connect the tipping bucket sensor (D1)
-volatile double RAIN_HEIGHT   = 100;     // variable for storing the rain_height
+volatile double RAIN_HEIGHT   = 0;     // variable for storing the rain_height
 
 volatile byte interrupt = 0;
 
@@ -28,9 +28,15 @@ Ticker timer;
 
 /* Interrupt for counting the number of clicks of the rain gauge */
 void rainInterrupt() {
-  RAIN_HEIGHT += BUCKETTIP_HEIGHT; // takes the current rain height and add the amount of the bucket
-  Serial.print("Curent Rain Height Collected (mm): ");
-  Serial.println(RAIN_HEIGHT);
+  static unsigned long last_interrupt_time = 0;
+  unsigned long interrupt_time = millis();
+  //se interrupt sono a meno di 200ms , considero che sia un rimbalzo e ignoro
+  if (interrupt_time - last_interrupt_time >200){
+    RAIN_HEIGHT += BUCKETTIP_HEIGHT; // takes the current rain height and add the amount of the bucket
+    Serial.print("Curent Rain Height Collected (mm): ");
+    Serial.println(RAIN_HEIGHT);  
+  }
+  last_interrupt_time = interrupt_time;
 }
 
 void pushButtonInterrupt() {
@@ -142,16 +148,16 @@ void setup() {
 
 
 void loop() {
-  //  if(interrupt>0){
-    if ( !client.connected() ) {
+    if(interrupt>0){
+      if ( !client.connected() ) {
       reconnect();
-    }
+      }
     InviaDati((float) RAIN_HEIGHT);
-    //RAIN_HEIGHT = 0;  //reset the rain height
-    RAIN_HEIGHT +=1;
+    RAIN_HEIGHT = 0;  //reset the rain height
+    //RAIN_HEIGHT +=1;
     interrupt=0;
     digitalWrite(LED_PIN,HIGH); // LED lights up to indicate that it the data is being transmitted
     delay(250);
     digitalWrite(LED_PIN,LOW);
-  //}
+  }
 }
