@@ -22,7 +22,7 @@ const char* WIFI_PASS = "7x94fW6B";
 const uint16_t  UPDATE_RATE   = 120; // How long to wait between sending data back (in seconds)
 const uint8_t   TIMEZONE_OFFSET = 10; // The timezone the sensor is located in (eg. 10 for GMT)
 
-const double    BUCKETTIP_HEIGHT = 0.1298;    // Don't forget to change this for your own tipping bucket.
+const double    BUCKETTIP_HEIGHT = 0.1;    // Don't forget to change this for your own tipping bucket.
                                              // The height of rain collected by a single bucket tip (in millimietre)
                                             // determined by the volume of water collection in a single bucket tip (mL
                                             // divided by the collection area
