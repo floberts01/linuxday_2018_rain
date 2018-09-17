@@ -16,8 +16,8 @@ const char*     WIFI_SSID     = "LugVi"; // Your WiFi SSID / name
 const char*     WIFI_PASS     = ""; // Your WiFi password
 */
 
-const char* WIFI_SSID = "ASUS";
-const char* WIFI_PASS = "7x94fW6B";
+const char* WIFI_SSID = "LUGVI_DEMO";
+const char* WIFI_PASS = "";
 
 const uint16_t  UPDATE_RATE   = 120; // How long to wait between sending data back (in seconds)
 const uint8_t   TIMEZONE_OFFSET = 10; // The timezone the sensor is located in (eg. 10 for GMT)
