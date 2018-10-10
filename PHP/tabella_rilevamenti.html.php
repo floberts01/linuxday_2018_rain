@@ -5,7 +5,13 @@
 
 <table align="center">
 <tr>
+<!--
 <th>id</th>
+-->
 <th>time</th>
-<th>temperature</th>
+<th>
+	<style="text-align: center;"><?php echo $etichetta_nome ?> <br/>
+	<style="text-align: center;"><?php echo "[\n" . $etichetta_simbolo ."\n]";?>
+</th>
+
 </tr>

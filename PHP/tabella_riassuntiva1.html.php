@@ -56,11 +56,12 @@ color: #ff0000; /* commento per colore rosso */
 
 <TABLE>
 <tr>
-<td class="center" colspan="2"><?php echo $etichetta_sensore;?></td>
+<td class="center" colspan="3"><?php echo $etichetta_sensore;?></td>
 </tr>
 <tr>
 <td>numero rilevamenti:  </td>
 <td class="right"><?php echo $row_cnt;?></td>
+<td class="right";" rowspan="6"><?php include "flot_example_timeparte2.html.php"; ?></td>
 </tr>
 <tr>
 <td><?php echo $etichetta_nome;?> massima:  </td>

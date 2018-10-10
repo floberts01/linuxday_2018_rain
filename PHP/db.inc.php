@@ -22,14 +22,16 @@ DEFINE ("Database", "temperature");
 
 try{
    $stringa = 'mysql:host=' .Host.';dbname='.Database;
-//   echo $stringa;
+//echo $stringa;
+
 // non ho trovato modo di inserire le costanti definite nella stringa per inizializzare PDOException
-//perciò ho costruito prima la stringa e poi passat come variabile
+// perciò ho costruito prima la stringa e poi passata come variabile
    $pdo = new PDO($stringa, User, Password);
  
- // $pdo = new PDO('mysql:host=localhost;dbname=temperature', User, Password);
+// $pdo = new PDO('mysql:host=localhost;dbname=temperature', User, Password);
   $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $pdo->exec('SET NAMES "utf8"');
+ 
 }
 
 catch (PDOException $e)
@@ -38,4 +40,3 @@ $output =' impossibile connetersi al server Mysql';
 include 'output.html.php';
 exit();
 }
-

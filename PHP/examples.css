@@ -2,9 +2,6 @@
 
 body {
 	background-color:#b0c4de;
-	
-	
-	
 	font: 18px/1.5em "proxima-nova", Helvetica, Arial, sans-serif;
 }
 
@@ -28,12 +25,12 @@ p {
 }
 
 button {
-	font-size: 18px;
+	font-size: 10px;
 	padding: 1px 7px;
 }
 
 input {
-	font-size: 18px;
+	font-size: 14px;
 }
 
 input[type=checkbox] {
@@ -52,14 +49,15 @@ input[type=checkbox] {
 #header h2 {
 	margin-left: 10px;
 	vertical-align: middle;
-	font-size: 42px;
+	font-size: 32px;
 	font-weight: bold;
 	text-decoration: none;
 	color: #000;
 }
 
 #content {
-	width: 880px;
+	/*width: 880px;*/
+	width: 640px;
 	margin: 0 auto;
 	padding: 10px;
 }
@@ -74,9 +72,9 @@ input[type=checkbox] {
 
 .demo-container {
 	box-sizing: border-box;
-	width: 850px;
-	height: 450px;
-	padding: 20px 15px 15px 15px;
+	width: 650px;
+	height: 350px;
+	padding: 10px 7px 7px 7px;
 	margin: 15px auto 30px auto;
 	border: 1px solid #ddd;
 	background: #fff;

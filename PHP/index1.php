@@ -99,7 +99,6 @@ $row_cnt  = $sql1->fetch()['numrows'];
 
 
 
-
 // query per determinare il valore massimo delle temperature registrate
 //$result_max = $pdo->query('SELECT MAX(value_temperature) FROM temperature');
 //di default fetch()=fetch_both() che restituisce un array indicizzato sia per indice che per nome
@@ -201,7 +200,7 @@ $stringa_orario = substr ($last_date_temperature , 11 , 8 );
 
 
 //richiamo template per la creazione della pagina con i risultati e l'intestazione di tabella dei valori
-include 'tabella_riassuntiva.html.php';
+include 'tabella_riassuntiva1.html.php';
 
 //inserisco il grafico delle temperature
 // tentativo di far rigenerare l'immagine inserendo la funzione now() che dovrebbe indurre in browser a ricaricare i dati
@@ -229,7 +228,7 @@ include 'tabella_riassuntiva.html.php';
 //$row_cnt  = $sql1->fetch()['numrows'];
 //$row_cnt;
 
-
+/*
 // inserisco l'intestazione della tabella per i dati estratti dal database richiamando una formattazione salvata in file esterno
 include 'tabella_rilevamenti.html.php';
 //ciclo la lettura dei dati registrati per inserirli nella tabella 
@@ -241,14 +240,13 @@ $sql->execute((array('sensor_id'=>$sensor)));
 
 //$res = $sql->fetchAll();
 //print_r($res);
-/*
+
   while ($row=$sql->fetch()) {
     //$id = $row["id_temperature"];
     $time = $row["date_temperature"];
     $value_temperature = $row["value_temperature"];
     include 'popola_tabella.html.php';
     }
-*/
 
 foreach ($sql as $row) {
     $id = $row["id_temperature"];
@@ -258,8 +256,9 @@ foreach ($sql as $row) {
     }
 
 
-
+*/
 echo "</table>";
+
 
 //prova di creazione del vettore dati per flot jquey
 
@@ -304,23 +303,14 @@ foreach ($sql2 as $row) {
     $return = $return ."]";
    //oppure nello script java converto al volo l'array in formato json
     //var json = <?php echo json_encode($return); >;
-    //in teoria java dovrebe leggerlo al volo senza bisogno di convertire json in array   
+    //in teoria java dovrebbe leggerlo al volo senza bisogno di convertire json in array   
      
   //print $return;
 
-  
-  
-
-
-
-
    $temp_min = $result_min;
-   
    $temp_max = $result_max;
-   
-
-
-include 'flot_example_time.html.php';
+  
+include 'flot_example_timeparte1.html.php'; 
 
 ?>
 </html>

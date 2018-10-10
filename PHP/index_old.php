@@ -1,21 +1,50 @@
 <html>
-
+<html>
 <head>
 
 <!-- <meta http-equiv = "refresh" content = "30" /> -->
      <meta charset="utf-8">
 </head>
-
 <body>
-		
+<ul>
+
+		<h2>
+		<table border="0" cellpadding=0" cellspacing="0">
+			<tbody>
+				<tr>
+					<td 
+					colspan="3" style="text-align: center"><img src="zeropoint_logo.png" alt="some_text" width="180" height="106">	
+					 </td>
+				</tr>
+				<tr>
+								
+					<td>
+						<img src="th.jpeg" alt="some_text" width="100" height="100">
+					<td>
+						<img src="th1.jpeg" alt="some_text" width="100" height="100"> 
+					<td>
+						<img src="th2.jpeg" alt="some_text" width="100" height="100">
+				</tr>
+				<tr>
+					<td colspan="3" style="text-align: center"><img src="1.png" alt="some_text" width="300" height="80">	</td>
+				</tr>
+			</tbody>
+		</table> 
+		<h2>
 <div id="header">		 
 		<h2>RILEVAMENTI SENSORI</h2>
-</div>
+	</div>
+
+
+<body>
+<ul>
+
+
 
 <?php
 //richiamo template per la connessione al database
 include 'db.inc.php';
-$output = 'connessione al database stabilita';
+//$output = 'connessione al database stabilita';
 //include 'output.html.php';
 
 
@@ -25,8 +54,8 @@ $output = 'connessione al database stabilita';
 function generateSelect($name = '', $options = array()) {
     $html = '<form action =' .htmlentities($_SERVER['PHP_SELF']) .' method= "post" >';
     
-    $html .='<p style="text-align:center;"><label>select the sensor</label><br>';
-    $html .='<p style="text-align:center;">';
+    $html .='<p style="margin-left: 80px;"><label>select the sensor</label><br>';
+    $html .='<p style="margin-left: 80px;">';
     $html .= '<select name="'.$name.'">';
     foreach ($options as $option => $value) {
         $html .= '<option value='.$value.'>'.$value.'</option>';
@@ -113,14 +142,12 @@ $result_max->execute(array('sensor_id'=>$sensor));
 $max_temperature = $result_max->fetch()[0];
 //echo $max_temperature;
 
-
-$dati_sensori = $pdo->prepare('SELECT sensor_type, sensor_quantities, sensor_unit FROM Sensors WHERE sensor_id = :sensor_id ');
+$dati_sensori = $pdo->prepare('SELECT tipo_sensore, unita_misura FROM sensori WHERE sensor_id = :sensor_id ');
 $dati_sensori->execute(array('sensor_id'=>$sensor));
 $etichette = $dati_sensori->fetch(PDO::FETCH_ASSOC);
-$etichetta_sensore = $etichette['sensor_type'];
-$etichetta_nome = $etichette['sensor_quantities'];
+$etichetta_nome = $etichette['tipo_sensore'];
 //echo $etichetta_nome;
-$etichetta_simbolo = $etichette['sensor_unit'];
+$etichetta_simbolo = $etichette['unita_misura'];
 //echo $etichetta_simbolo ."\n";
 //echo $etichetta_nome . $etichetta_simbolo;
 
@@ -185,12 +212,10 @@ $last_date_array_temperature= date_parse($last_date_temperature);
 //ora posso prendere i singoli componenti del vettore ('aaaa', 'mm', etc...) nell'esempio l'ora [hour]
 //print_r($last_hour_temperature=$last_date_array_temperature['hour']);
 
-/*
- * per ultimo conoscendo la struttura fissa del campo data fornito da mysql (che viene letto come stringa) estraggo le sotto stringhe per ottenere  "aaaa/mm/gg" e "ora:min:sec"
- * substr ( string $string , int $start [, int $length ] )
- * data di sql = "aaaa-mm-gg hh:mm:ss", 10 caratteri da posizione 0 leggo "aaaa-mm-gg" e da 11 
- * 8 caratteri da posizione 12 leggo "hh:mm:ss"
-*/
+//per ultimo conoscendo la struttura fissa del campo data fornito da mysql (che viene letto come stringa) estraggo le sotto stringhe per ottenere  "aaaa/mm/gg" e "ora:min:sec"
+//substr ( string $string , int $start [, int $length ] )
+//data di sql = "aaaa-mm-gg hh:mm:ss", 10 caratteri da posizione 0 leggo "aaaa-mm-gg" e da 11 
+// 8 caratteri da posizione 12 leggo "hh:mm:ss"
 $stringa_anno = substr ($last_date_temperature , 0 , 10 );
 //echo $stringa_anno;
 $stringa_orario = substr ($last_date_temperature , 11 , 8 );
@@ -198,6 +223,9 @@ $stringa_orario = substr ($last_date_temperature , 11 , 8 );
 
 //echo $last_date_temperature;
 //echo $last_value_temperature;
+/*
+*/
+
 
 
 //richiamo template per la creazione della pagina con i risultati e l'intestazione di tabella dei valori
@@ -209,8 +237,15 @@ include 'tabella_riassuntiva.html.php';
 //echo "<img src='grafico_temperature.php' class='img_bordata'/><p></p>";
 
 
-//$sql = 'SELECT (id_temperature) AS id_temperature, (date_temperature) AS date_temperature, value_temperature 
-//    FROM temperature WHERE sensor_id = :sensor_id';
+
+
+
+
+
+
+
+$sql = 'SELECT (id_temperature) AS id_temperature, (date_temperature) AS date_temperature, value_temperature 
+    FROM temperature';
 // con PDO la riga $result = $mysqli->query($sql); diviene
 //$result = $pdo->query($sql);
 //con PDO la riga $row_cnt = $result->num_rows; non pare fattibile, sapere quante righe mi sono state restituite è un casino
@@ -222,44 +257,39 @@ include 'tabella_riassuntiva.html.php';
 //echo print_r($row);
 // per contare il numero di record pare si debba fare una query 
 // per esempio preparo mysql alla esecuzione del query
-//$sql1  = $pdo->prepare("SELECT COUNT(*) AS numrows FROM temperature");
+$sql1  = $pdo->prepare("SELECT COUNT(*) AS numrows FROM temperature");
 // eseguo la query
-//$sql1->execute();
+$sql1->execute();
 //ora $sql1 è un resultset di cui faccio il fetch e assegno a row_cnt il campo numrows
-//$row_cnt  = $sql1->fetch()['numrows'];
+$row_cnt  = $sql1->fetch()['numrows'];
 //$row_cnt;
 
 
+
 // inserisco l'intestazione della tabella per i dati estratti dal database richiamando una formattazione salvata in file esterno
-include 'tabella_rilevamenti.html.php';
+//include 'tabella_rilevamenti.html.php';
 //ciclo la lettura dei dati registrati per inserirli nella tabella 
 
-$sql = 'SELECT (id_temperature) AS id_temperature, (date_temperature) AS date_temperature, value_temperature 
-    FROM temperature WHERE sensor_id = :sensor_id';
-$sql = $pdo->prepare($sql);
-$sql->execute((array('sensor_id'=>$sensor)));
+//  while ($row=$result->fetch()) {
+//    $id = $row["id_temperature"];
+//    $time = $row["date_temperature"];
+//    $value_temperature = $row["value_temperature"];
+//    include 'popola_tabella.html.php';
+//    }
 
-//$res = $sql->fetchAll();
-//print_r($res);
-/*
-  while ($row=$sql->fetch()) {
-    //$id = $row["id_temperature"];
-    $time = $row["date_temperature"];
-    $value_temperature = $row["value_temperature"];
-    include 'popola_tabella.html.php';
-    }
-*/
-
-foreach ($sql as $row) {
+// ciclo per ogni result set 
+/*foreach ($pdo->query($sql) as $row) {
     $id = $row["id_temperature"];
     $time = $row["date_temperature"];
     $value_temperature = $row["value_temperature"];
     include 'popola_tabella.html.php';
     }
+*/ 
+//alla fine del ciclo scrivo il tag di chiusura della tabella
+//echo "</table>";
 
 
 
-echo "</table>";
 
 //prova di creazione del vettore dati per flot jquey
 
@@ -268,6 +298,16 @@ $sql2 = 'SELECT (id_temperature) AS id_temperature, UNIX_TIMESTAMP(date_temperat
 $sql2 = $pdo->prepare($sql2);
 $sql2->execute((array('sensor_id'=>$sensor)));
 
+/*
+include 'tabella_rilevamenti.html.php';
+foreach ($sql2 as $row) {
+    $id = $row["id_temperature"];
+    $time = $row["date_temperature"];
+    $value_temperature = $row["value_temperature"];
+    include 'popola_tabella.html.php';
+    }
+echo "</table>";
+*/
 
 
 
@@ -278,25 +318,17 @@ $return = "[";
 foreach ($sql2 as $row) {
     //$id = $row["id_temperature"] non usato;
     //$timing = strtotime($row["date_temperature"]); //trasforma data se in formato mysql
-    
     $timing = $row["date_temperature"]; // con la precedente estrazione già in formato unix
-    
     //$dt = ($row['timing']+36000)*1000; --ori diventa
-    
     $dt = $timing*1000; //dt dovrebbero essere millisecondi da January 1 1970 00:00:00 UTC 
-    
     //echo $dt;    
         
     $value_temperature = $row["value_temperature"];
-    
     //$te = $row['temp']  --originale diventa;
-    
     $te = $row["value_temperature"];
-    
     //$te = (($te+252-500) / 10); // easier to do adjustments here
     //if($te>$result_max) $result_max=$te; // so the graph doesnt run along the top
     //if($te<$result_min) $result_min=$te; // or bottom of the axis
-    
     $return = $return ."[$dt, $te], "; //creato vettore di coppie time/value
           
     }
@@ -307,7 +339,10 @@ foreach ($sql2 as $row) {
     //in teoria java dovrebe leggerlo al volo senza bisogno di convertire json in array   
      
   //print $return;
-
+ 
+  //foreach ($return as $string){
+  //print_r($string);
+  //}
   
   
 
@@ -323,4 +358,6 @@ foreach ($sql2 as $row) {
 include 'flot_example_time.html.php';
 
 ?>
-</html>
+
+
+
